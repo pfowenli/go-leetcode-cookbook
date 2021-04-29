@@ -57,5 +57,3 @@ func isAlphaNumeric(char string) bool {
     }    
     return false
 }
-
-:
