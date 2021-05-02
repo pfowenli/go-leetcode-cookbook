@@ -1,56 +1,48 @@
-package
+package leetcode
 
 func groupAnagrams(strs []string) [][]string {
-    anagramGroupsMap := make(map[int][][]string)
+    letterCountMapMap := make(map[string]map[rune]int)
+    anagramGroupMap := make(map[string][]string)
     
-
     for _, str := range strs {
-        anagramGroups := anagramGroupsMap[len(str)]
-
-        inserted := false
-        for index, anagrams := range anagramGroups {
-            if isAnagram(anagrams[0], str) {
-                anagramGroups[index] = append(anagrams, str)
-                inserted = true
-                break
-            }
+        letterCountMap := make(map[rune]int)
+        for _, letter := range str {
+            letterCountMap[letter] += 1
         }
-        if inserted == false {
-            anagramGroups = append(anagramGroups, []string{str})
+
+        anagram := str
+        for a, m := range letterCountMapMap {
+            if len(a) != len(str) {
+                continue
+            }
+            if !isAnagram(m, letterCountMap) {
+                continue
+            }
+            anagram = a
+            break
         }
         
-        anagramGroupsMap[len(str)] = anagramGroups
+        if anagram == str {
+            letterCountMapMap[anagram] = letterCountMap
+        }
+        
+        anagramGroupMap[anagram] = append(anagramGroupMap[anagram], str)
     }
     
     results := [][]string{}
-    
-    for _, anagramGroups := range anagramGroupsMap {
-        results = append(results, anagramGroups...)
+    for _, anagramGroup := range anagramGroupMap {
+        results = append(results, anagramGroup)
     }
     
     return results
 }
 
-func isAnagram(a string, b string) bool {
-    letterCountMap := make(map[rune]int)
-    
-    for _, letter := range a {
-        letterCountMap[letter] += 1
-    }
-    
-    for _, letter := range b {
-        if letterCountMap[letter] == 0 {
-            return false
-        }
-        letterCountMap[letter] -= 1
-    }
-    
-    for _, count := range letterCountMap {
-        if count != 0 {
+func isAnagram(map1 map[rune]int, map2 map[rune]int) bool {
+    for letter, count := range map1 {
+        if map2[letter] != count {
             return false
         }
     }
-    
     return true
 }
 
