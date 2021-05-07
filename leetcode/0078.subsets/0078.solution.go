@@ -1,17 +1,17 @@
 package leetcode
 
 func subsets(nums []int) [][]int {
-	results := [][]int{[]int{}}
+	results := [][]int{}
+	results = append(results, []int{})
 
 	for _, num := range nums {
-		combinations := [][]int{}
+		for _, result := range results {
+			combination := []int{}
+			combination = append(combination, result...)
+			combination = append(combination, num)
 
-		for _, combination := range results {
-			combinations = append(combinations, combination)
-			combinations = append(combinations, temp := append(combination, int(num)))
+			results = append(results, combination)
 		}
-
-		results = combinations
 	}
 
 	return results
