@@ -6,9 +6,9 @@ import (
 )
 
 func TestTopKFrequentI(t *testing.T) {
-	nums := []int{1, 1, 1, 2, 2, 3}
-	k := int(2)
-	expected := []int{1, 2}
+	nums := []int{1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 5}
+	k := int(4)
+	expected := []int{1, 4, 2, 5}
 
 	if got := topKFrequent(nums, k); !isSameSet(got, expected) {
 		t.Errorf("topKFrequent() = %d, expected = %d", got, expected)

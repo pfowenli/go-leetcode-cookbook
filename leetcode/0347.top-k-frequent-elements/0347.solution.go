@@ -20,19 +20,26 @@ func topKFrequent(nums []int, k int) []int {
 		numSetMap[count + 1][num] = true
 
 		if count > 0 {
-			delete(numSetMap[count], num)
+			numSetMap[count][num] = false
 		}
 	}
 
-	results := []int{}
-
 	count := maxCount
-	for count >= 0 {
+	index := int(0)
+	results := make([]int, k)
+	
+	for {
 		numSet := numSetMap[count]
 
 		for num, _ := range numSet {
-			results = append(results, num)
-			if len(results) == k {
+			if numSet[num] == false {
+				continue
+			}
+
+			results[index] = num
+			index += 1
+
+			if index == k {
 				return results
 			}
 		}
