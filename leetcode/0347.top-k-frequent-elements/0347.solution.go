@@ -1,51 +1,30 @@
 package leetcode
 
 func topKFrequent(nums []int, k int) []int {
-	maxCount := int(0)
-	countMap := make(map[int]int)
-	numSetMap := make(map[int](map[int]bool))
-
+	numFrequencyMap := make(map[int]int)
 	for _, num := range nums {
-		count := countMap[num]
-
-		if count == maxCount {
-			maxCount += 1
-		}
-
-		countMap[num] += 1
-
-		if numSetMap[count + 1] == nil {
-			numSetMap[count + 1] = make(map[int]bool)
-		}
-		numSetMap[count + 1][num] = true
-
-		if count > 0 {
-			numSetMap[count][num] = false
-		}
+		numFrequencyMap[num] = numFrequencyMap[num] + 1
 	}
 
-	count := maxCount
-	index := int(0)
-	results := make([]int, k)
-	
-	for {
-		numSet := numSetMap[count]
-
-		for num, _ := range numSet {
-			if numSet[num] == false {
-				continue
-			}
-
-			results[index] = num
-			index += 1
-
-			if index == k {
-				return results
-			}
+	buckets := make([][]int, len(nums)+1)
+	for num, frequency := range numFrequencyMap {
+		if buckets[frequency] == nil {
+			buckets[frequency] = []int{}
 		}
-
-		count -= 1
+		buckets[frequency] = append(buckets[frequency], num)
 	}
 
-	return results
+	topK := []int{}
+	for i := len(buckets) - 1; i > 0 && len(topK) < k; i-- {
+		if buckets[i] == nil {
+			continue
+		}
+		if len(buckets[i]) < k-len(topK) {
+			topK = append(topK, buckets[i]...)
+			continue
+		}
+		topK = append(topK, buckets[i][0:k-len(topK)]...)
+	}
+
+	return topK
 }
