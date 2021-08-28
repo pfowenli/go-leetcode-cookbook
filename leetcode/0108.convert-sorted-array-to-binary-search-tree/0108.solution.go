@@ -1,3 +1,5 @@
+package leetcode
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -6,6 +8,7 @@
  *     Right *TreeNode
  * }
  */
+
 func sortedArrayToBST(nums []int) *TreeNode {
     length := len(nums)
 

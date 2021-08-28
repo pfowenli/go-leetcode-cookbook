@@ -28,7 +28,6 @@ func TestOddEventListII(t *testing.T) {
 	}
 }
 
-
 func convertArrayToList(nums []int) *ListNode {
 	if len(nums) == 0 {
 		return (*ListNode)(nil)

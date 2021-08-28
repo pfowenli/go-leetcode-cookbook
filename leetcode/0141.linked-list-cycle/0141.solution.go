@@ -8,31 +8,30 @@ package leetcode
  * }
  */
 func hasCycle(head *ListNode) bool {
-    if head == nil {
-        return false
-    }
+	if head == nil {
+		return false
+	}
 
-    slow := head
-    fast := head
-    
-    for {
-        slow = slow.Next
-        if slow == nil {
-            return false
-        }
+	slow := head
+	fast := head
 
-        for step := 0; step < 2; step++ {
-            fast = fast.Next
-            if fast == nil {
-                return false
-            }
-        }
+	for {
+		slow = slow.Next
+		if slow == nil {
+			return false
+		}
 
-        if slow == fast {
-            return true
-        }
-    }
+		for step := 0; step < 2; step++ {
+			fast = fast.Next
+			if fast == nil {
+				return false
+			}
+		}
 
-    return false
+		if slow == fast {
+			return true
+		}
+	}
+
+	return false
 }
-
